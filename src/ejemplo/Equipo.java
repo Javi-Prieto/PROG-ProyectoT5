@@ -4,19 +4,20 @@ import java.util.List;
 
 public class Equipo {
 	//Fields
-	private List<Jugador> players;
+	private String nombre;
+	private CRUDJugador crud;
 	private int cantidadPuntos;
 	//Constructor
-	public Equipo(List<Jugador> players) {
+	public Equipo(CRUDJugador crud, int cantidadPuntos) {
 		super();
-		this.players = players;
+		this.crud = crud;
+		this.cantidadPuntos = cantidadPuntos;
 	}
-	//Getter and setter
-	public List<Jugador> getPlayers() {
-		return players;
+	public CRUDJugador getCrud() {
+		return crud;
 	}
-	public void setPlayers(List<Jugador> players) {
-		this.players = players;
+	public void setCrud(CRUDJugador crud) {
+		this.crud = crud;
 	}
 	public int getCantidadPuntos() {
 		return cantidadPuntos;
@@ -24,14 +25,10 @@ public class Equipo {
 	public void setCantidadPuntos(int cantidadPuntos) {
 		this.cantidadPuntos = cantidadPuntos;
 	}
-	//toString
 	@Override
 	public String toString() {
-		return "Equipo [players=" + players + ", cantidadPuntos=" + cantidadPuntos + "]";
+		return "Equipo [crud=" + crud + ", cantidadPuntos=" + cantidadPuntos + "]";
 	}
 	//Methods
-	public void addPlayer(Jugador j) {
-		players.add(j);
-	}
 	
 }
