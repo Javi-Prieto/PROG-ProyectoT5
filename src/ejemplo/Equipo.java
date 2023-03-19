@@ -1,5 +1,6 @@
 package ejemplo;
 
+import java.util.Iterator;
 
 public class Equipo implements Comparable<Equipo>{
 	//Fields
@@ -53,14 +54,26 @@ public class Equipo implements Comparable<Equipo>{
 	@Override
 	public int compareTo(Equipo o) {
 		if(this.cantPartidasGanadas > o.cantPartidasGanadas) {
-			return 1;
+			return -1;
 		}else {
 			if(this.cantPartidasGanadas < o.cantPartidasGanadas) {
-				return -1;
+				return 1;
 			}else {
 				return 0;
 			}
 		}
 	}
-	
+	public void calcularCantidadPuntosEquipo() {
+		int cantPuntos = 0;
+		Iterator <Jugador> it = crud.getPlayers().iterator();
+		Jugador j;
+		while(it.hasNext()) {
+			j = it.next();
+			cantPuntos += j.getCantPuntosIndv();
+		}
+		this.cantidadPuntos = cantPuntos;
+	}
+	public void addJugador(Jugador j) {
+		crud.agregarJugador(j);
+	}
 }

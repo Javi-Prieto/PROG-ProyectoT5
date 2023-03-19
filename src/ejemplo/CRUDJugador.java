@@ -25,5 +25,20 @@ public class CRUDJugador {
 	public String toString() {
 		return "CRUDJugador [players=" + players + "]";
 	}
-	
+	//methods
+	public void agregarJugador(Jugador j) {
+		players.add(j);
+	}
+	public Jugador findByName(String name) {
+		Jugador j = players.stream()
+						.filter(n -> n.getNombre().equalsIgnoreCase(name))
+						.toList().get(0);
+		return j;
+	}
+	public void borrarJugador(String nombre) {
+		players.remove(findByName(nombre));
+	}
+	public void editarJugadorCantKills(String nombre, int kills) {
+		players.get(players.indexOf(findByName(nombre))).setCantidadKillsTotal(kills);
+	}
 }
