@@ -30,15 +30,21 @@ public class GestionJugador {
 	public void addJugador(Jugador J) {
 		crudJ.agregarJugador(J);
 	}
+	/*Devolverá la lista de todos los jugadores ordenadas por KD*/
 	public List<Jugador> extraerJugadoresPorKd(){
 		return crudJ.getPlayers().stream()
 										.sorted(new CompararPorKD())
 										.toList();
 	}
+	/*Con este método podremos extraer la cantidad de jugadores deseada ordenados por kd , el primero,
+	 * los dos primeros o los deseados*/
 	public List<Jugador> extraerJugadoresPorKd(int limit){
 		return crudJ.getPlayers().stream()
+				//Generamos un stream ordenamos por KD
 				.sorted(new CompararPorKD())
+				//Limitamos la cantidad de jugadores a la cantidad deseada
 				.limit(limit)
+				//Convertimos a una lista y lo devolvemos
 				.toList();
 	}
 }

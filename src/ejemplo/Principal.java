@@ -12,7 +12,7 @@ public class Principal {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		BDD bd = new BDD();
-		List <Jugador> listaJugs = new ArrayList<Jugador>();
+		List <Jugador> listaJugs = new ArrayList<Jugador>(), listaJugsEqs = new ArrayList<Jugador>();
 		List <Equipo> listaEqs = new ArrayList<Equipo>();
 		CRUDJugador cj;
 		CRUDEquipo ce ;
@@ -20,16 +20,20 @@ public class Principal {
 		GestionEquipos ge ;
 		Mostrar mo;
 		String nombreE, nombreJ;
-		char opCh = 'S';
 		int op = 1, opInt = 1, puntos, kills, muertes, partidasGanadas, limit;
+		//Rellenar los jugadaores
 		listaJugs = Arrays.asList(bd.devolverJugadoresFnatic(), 
 				bd.devolverJugadoresGiants(), 
 				bd.devolverJugadoresHeretics(),
 				bd.devolverJugadoresKarmine(),
 				bd.devolverJugadoresKOI(),
 				bd.devolverJugadoresNavi())
+				//Hacemos una lista con todos los datos de los jugadores y de esta sacamos un stream
 				.stream()
+				//Con flat map hacemos un Stream de los datos interiores que venían divididos
+				//en el Stream los juntamos en uno grande
 				.flatMap(x -> x.stream())
+				//Recogemos todos los datos y hacemos una lista para poder guardarlo
 				.collect(Collectors.toList());
 		
 		listaEqs = Arrays.asList(bd.devolverFnatic(),
@@ -50,11 +54,11 @@ public class Principal {
 			try {
 				op = Leer.datoInt();
 				switch(op) {
+				//NO USAR EL PRIMER MÉTODO DA ERROR
 					case 1:
 						System.out.println("Diga el nombre del equipo");
 						nombreE = Leer.dato();
-						listaJugs.clear();
-						while(opCh == 'S') {
+						while(opInt == 1) {
 							System.out.println("Diga el nombre del jugador");
 							nombreJ = Leer.dato();
 							System.out.println("Diga los puntos");
@@ -63,15 +67,17 @@ public class Principal {
 							kills = Leer.datoInt();
 							System.out.println("Diga la cantidad de muertes");
 							muertes = Leer.datoInt();
-							listaJugs.add(new Jugador(nombreJ, puntos, kills, muertes, nombreE));
-							System.out.println("¿Desea agregar otro jugador? Pulse S(Si) o N(No)");
-							opCh = Leer.datoChar();
+							listaJugsEqs.add(new Jugador(nombreJ, puntos, kills, muertes, nombreE));
+							gj.addJugador(new Jugador(nombreJ, puntos, kills, muertes, nombreE));
+							System.out.println("¿Desea agregar otro jugador? Pulse 1(Si) o 0(No)");
+							opInt = Leer.datoInt();
 						}
 						System.out.println("Diga la cantidad de partidas ganadas");
 						partidasGanadas = Leer.datoInt();
-						ge.addEquipo(new Equipo(nombreE, new CRUDJugador(listaJugs), partidasGanadas));
+						ge.addEquipo(new Equipo(nombreE, new CRUDJugador(listaJugsEqs), partidasGanadas));
 						ge.getCrudE().calcularPuntosTodosEquipos();
 						mo.setGe(ge);
+						mo.setGj(gj);
 						break;
 					case 2:
 						System.out.println("Diga el nombre del jugador");
@@ -170,7 +176,7 @@ public class Principal {
 			}catch(NumberFormatException e) {
 				System.err.println("Error: Ha introducido un valor incorrecto");
 			}catch(ArrayIndexOutOfBoundsException e){
-				System.err.println("Error: Error al introducir Jugador o Equipo");
+				System.err.println("Error: Equipo inexistente");
 			}catch(Exception e) {
 				System.err.println("Error: Error desconocido, estamos trabajando en ello en estos momentos");
 			}

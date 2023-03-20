@@ -29,10 +29,13 @@ public class CRUDEquipo {
 	public void agregarEquipo(Equipo e) {
 		equipos.add(e);
 	}
+	/*Método encargado de buscar un equipo por nombre*/
 	public Equipo findByName(String name) {
 		List <Equipo> lista = equipos.stream()
+				//Una vez generado un stream de la lista de equipos le aplicamos un filter en el que usa un predicate y todo el que lo cumpla es el que continua en el stream
 									.filter(n -> n.getNombre().equalsIgnoreCase(name))
 									.toList();
+		//Al ser único el nombre  devuelvo la posición 0 ya que solo va a haber uno con un nombre
 		return lista.get(0);
 	}
 	public void borrarEquipo(String nombre) {
